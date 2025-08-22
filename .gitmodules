@@ -1,0 +1,6 @@
+[submodule "jwt_security_common"]
+	path = jwt_security_common
+	url = ./jwt_security_common
+[submodule "user_service"]
+	path = user_service
+	url = ./user_service

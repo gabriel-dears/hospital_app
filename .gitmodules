@@ -1,6 +1,6 @@
 [submodule "jwt_security_common"]
 	path = jwt_security_common
-	url = ./jwt_security_common
+	url = https://github.com/gabriel-dears/jwt_security_common.git
 [submodule "user_service"]
 	path = user_service
-	url = ./user_service
+	url = https://github.com/gabriel-dears/user_service.git

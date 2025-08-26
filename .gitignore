@@ -37,8 +37,9 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
-# macOS
-.DS_Store
-
 # Linux
 *~
+
+# Security
+
+.env

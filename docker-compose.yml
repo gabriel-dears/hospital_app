@@ -11,6 +11,12 @@ services:
       - "5005:5005"
     environment:
       DEBUG: "true"
+      HOSPITAL_APP_USER_SERVICE_DB_URL: jdbc:postgresql://user-service-db:5432/user_service_db
+      HOSPITAL_APP_USER_SERVICE_DB_USER: user
+      HOSPITAL_APP_USER_SERVICE_DB_PASS: pass
+      HOSPITAL_APP_USER_SERVICE_DB_DRIVER: org.postgresql.Driver
+      HOSPITAL_APP_USER_SERVICE_DB_DDL_AUTO: update
+      HOSPITAL_APP_USER_SERVICE_DB_DIALECT: org.hibernate.dialect.PostgreSQLDialect
   user-service-db:
     image: postgres:15-alpine3.21
     container_name: hospital-app-user-service-db

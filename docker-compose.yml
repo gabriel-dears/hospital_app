@@ -10,30 +10,67 @@ services:
       - "8080:8080"
       - "5005:5005"
     environment:
-      - DEBUG=${DEBUG}
-      - HOSPITAL_APP_USER_SERVICE_DB_URL=${HOSPITAL_APP_USER_SERVICE_DB_URL}
-      - HOSPITAL_APP_USER_SERVICE_DB_USER=${HOSPITAL_APP_USER_SERVICE_DB_USER}
-      - HOSPITAL_APP_USER_SERVICE_DB_PASS=${HOSPITAL_APP_USER_SERVICE_DB_PASS}
-      - HOSPITAL_APP_USER_SERVICE_DB_DRIVER=${HOSPITAL_APP_USER_SERVICE_DB_DRIVER}
-      - HOSPITAL_APP_USER_SERVICE_DB_DDL_AUTO=${HOSPITAL_APP_USER_SERVICE_DB_DDL_AUTO}
-      - HOSPITAL_APP_USER_SERVICE_DB_DIALECT=${HOSPITAL_APP_USER_SERVICE_DB_DIALECT}
+      DEBUG: ${DEBUG}
+      HOSPITAL_APP_USER_SERVICE_DB_URL: ${HOSPITAL_APP_USER_SERVICE_DB_URL}
+      HOSPITAL_APP_USER_SERVICE_DB_USER: ${HOSPITAL_APP_USER_SERVICE_DB_USER}
+      HOSPITAL_APP_USER_SERVICE_DB_PASS: ${HOSPITAL_APP_USER_SERVICE_DB_PASS}
+      HOSPITAL_APP_USER_SERVICE_DB_DRIVER: ${HOSPITAL_APP_USER_SERVICE_DB_DRIVER}
+      HOSPITAL_APP_USER_SERVICE_DB_DDL_AUTO: ${HOSPITAL_APP_USER_SERVICE_DB_DDL_AUTO}
+      HOSPITAL_APP_USER_SERVICE_DB_DIALECT: ${HOSPITAL_APP_USER_SERVICE_DB_DIALECT}
 
   user-service-db:
     image: postgres:15-alpine3.21
     container_name: hospital-app-user-service-db
     environment:
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${HOSPITAL_APP_USER_SERVICE_DB}
+      - POSTGRES_USER=${HOSPITAL_APP_USER_SERVICE_DB_USER}
+      - POSTGRES_PASSWORD=${HOSPITAL_APP_USER_SERVICE_DB_PASS}
     volumes:
       - user-service-postgres-data:/var/lib/postgresql/data
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U $${POSTGRES_USER}" ]
+      test: [ "CMD-SHELL", "pg_isready -U $${HOSPITAL_APP_USER_SERVICE_DB_USER}" ]
       interval: 10s
       timeout: 5s
       retries: 5
     ports:
       - "5443:5432"
 
+  appointment-service:
+    build:
+      context: ./
+      dockerfile: appointment_service/Dockerfile
+    container_name: hospital-app-appointment-service
+    depends_on:
+      - appointment-service-db
+    ports:
+      - "8081:8080"
+      - "5006:5006"
+    environment:
+      DEBUG: ${DEBUG}
+      HOSPITAL_APP_APPOINTMENT_SERVICE_DB_URL: ${HOSPITAL_APP_APPOINTMENT_SERVICE_DB_URL}
+      HOSPITAL_APP_APPOINTMENT_SERVICE_DB_USER: ${HOSPITAL_APP_APPOINTMENT_SERVICE_DB_USER}
+      HOSPITAL_APP_APPOINTMENT_SERVICE_DB_PASS: ${HOSPITAL_APP_APPOINTMENT_SERVICE_DB_PASS}
+      HOSPITAL_APP_APPOINTMENT_SERVICE_DB_DRIVER: ${HOSPITAL_APP_APPOINTMENT_SERVICE_DB_DRIVER}
+      HOSPITAL_APP_APPOINTMENT_SERVICE_DB_DDL_AUTO: ${HOSPITAL_APP_APPOINTMENT_SERVICE_DB_DDL_AUTO}
+      HOSPITAL_APP_APPOINTMENT_SERVICE_DB_DIALECT: ${HOSPITAL_APP_APPOINTMENT_SERVICE_DB_DIALECT}
+
+  appointment-service-db:
+    image: postgres:15-alpine3.21
+    container_name: hospital-app-appointment-service-db
+    environment:
+      - POSTGRES_DB=${HOSPITAL_APP_APPOINTMENT_SERVICE_DB}
+      - POSTGRES_USER=${HOSPITAL_APP_APPOINTMENT_SERVICE_DB_USER}
+      - POSTGRES_PASSWORD=${HOSPITAL_APP_APPOINTMENT_SERVICE_DB_PASS}
+    volumes:
+      - appointment-service-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $${HOSPITAL_APP_APPOINTMENT_SERVICE_DB_USER}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5444:5432"
+
 volumes:
   user-service-postgres-data:
+  appointment-service-postgres-data:

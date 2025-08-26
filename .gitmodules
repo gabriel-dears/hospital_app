@@ -4,3 +4,6 @@
 [submodule "user_service"]
 	path = user_service
 	url = https://github.com/gabriel-dears/user_service.git
+[submodule "appointment_service"]
+	path = appointment_service
+	url = https://github.com/gabriel-dears/appointment_service.git

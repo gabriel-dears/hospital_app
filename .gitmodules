@@ -7,3 +7,6 @@
 [submodule "appointment_service"]
 	path = appointment_service
 	url = https://github.com/gabriel-dears/appointment_service.git
+[submodule "common"]
+	path = common
+	url = https://github.com/gabriel-dears/common.git

@@ -11,5 +11,6 @@
     <modules>
         <module>jwt_security_common</module>
         <module>user_service</module>
+        <module>appointment_service</module>
     </modules>
 </project>

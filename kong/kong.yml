@@ -1,0 +1,21 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+  - name: user-service
+    protocol: http
+    host: user-service
+    port: 8080
+    routes:
+      - name: user-service-route
+        paths:
+          - /user-service
+
+  - name: appointment-service
+    protocol: http
+    host: appointment-service
+    port: 8080
+    routes:
+      - name: appointment-service-route
+        paths:
+          - /appointment-service

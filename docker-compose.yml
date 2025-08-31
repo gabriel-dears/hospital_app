@@ -127,6 +127,21 @@ services:
       - "5007:5005"
 
   # =====================
+  # Appointment History Service
+  # =====================
+  appointment-history-service:
+    build:
+      context: ./
+      dockerfile: appointment_history_service/Dockerfile
+    container_name: hospital-app-appointment-history-service
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "8084:8080"
+      - "5008:5005"
+
+  # =====================
   # RabbitMQ
   # =====================
   rabbitmq:

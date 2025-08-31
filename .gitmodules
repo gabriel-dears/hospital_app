@@ -16,3 +16,6 @@
 [submodule "proto_repo"]
 	path = proto_repo
 	url = https://github.com/gabriel-dears/proto_repo.git
+[submodule "appointment_history_service"]
+	path = appointment_history_service
+	url = https://github.com/gabriel-dears/appointment_history_service.git

@@ -99,7 +99,7 @@ services:
     image: rabbitmq:3.12-management
     container_name: hospital-app-rabbitmq
     ports:
-      - "5672:5672"
+      - "5672"
       - "15672:15672"
     environment:
       RABBITMQ_DEFAULT_USER: guest

@@ -1,4 +1,7 @@
 services:
+  # =====================
+  # API Gateway (Kong)
+  # =====================
   kong:
     image: kong:3.4
     container_name: hospital-app-kong
@@ -8,7 +11,7 @@ services:
       - appointment-service
     environment:
       KONG_DATABASE: "off"
-      KONG_DECLARATIVE_CONFIG: /etc/kong/kong.yml
+      KONG_DECLARATIVE_CONFIG: ${KONG_DECLARATIVE_CONFIG}
       KONG_PROXY_ACCESS_LOG: /dev/stdout
       KONG_ADMIN_ACCESS_LOG: /dev/stdout
       KONG_PROXY_ERROR_LOG: /dev/stderr
@@ -18,98 +21,132 @@ services:
     volumes:
       - ./kong/kong.yml:/etc/kong/kong.yml:ro
     ports:
-      - "8000:8000"   # Gateway HTTP
-      - "8443:8443"   # Gateway HTTPS
-      - "8001:8001"   # Admin API
-      - "8444:8444"   # Admin API HTTPS
+      - "8000:8000"
+      - "8443:8443"
+      - "8001:8001"
+      - "8444:8444"
+
+  # =====================
+  # User Service
+  # =====================
   user-service:
     build:
       context: ./
       dockerfile: user_service/Dockerfile
     container_name: hospital-app-user-service
     depends_on:
-      - user-service-db
+      user-service-db:
+        condition: service_healthy
     ports:
-      - "8080"
+      - "8081:8080"
       - "5005:5005"
     environment:
       ENABLE_REMOTE_DEBUG: ${ENABLE_REMOTE_DEBUG}
-      HOSPITAL_APP_USER_SERVICE_DB_URL: ${HOSPITAL_APP_USER_SERVICE_DB_URL}
-      HOSPITAL_APP_USER_SERVICE_DB_USER: ${HOSPITAL_APP_USER_SERVICE_DB_USER}
-      HOSPITAL_APP_USER_SERVICE_DB_PASS: ${HOSPITAL_APP_USER_SERVICE_DB_PASS}
-      HOSPITAL_APP_USER_SERVICE_DB_DRIVER: ${HOSPITAL_APP_USER_SERVICE_DB_DRIVER}
-      HOSPITAL_APP_USER_SERVICE_DB_DDL_AUTO: ${HOSPITAL_APP_USER_SERVICE_DB_DDL_AUTO}
-      HOSPITAL_APP_USER_SERVICE_DB_DIALECT: ${HOSPITAL_APP_USER_SERVICE_DB_DIALECT}
+      HOSPITAL_APP_USER_SERVICE_DB_URL: ${USER_SERVICE_DB_URL}
+      HOSPITAL_APP_USER_SERVICE_DB_USER: ${USER_SERVICE_DB_USER}
+      HOSPITAL_APP_USER_SERVICE_DB_PASS: ${USER_SERVICE_DB_PASS}
+      HOSPITAL_APP_USER_SERVICE_DB_DRIVER: ${USER_SERVICE_DB_DRIVER}
+      HOSPITAL_APP_USER_SERVICE_DB_DDL_AUTO: ${USER_SERVICE_DB_DDL_AUTO}
+      HOSPITAL_APP_USER_SERVICE_DB_DIALECT: ${USER_SERVICE_DB_DIALECT}
 
   user-service-db:
     image: postgres:15-alpine3.21
     container_name: hospital-app-user-service-db
     environment:
-      - POSTGRES_DB=${HOSPITAL_APP_USER_SERVICE_DB}
-      - POSTGRES_USER=${HOSPITAL_APP_USER_SERVICE_DB_USER}
-      - POSTGRES_PASSWORD=${HOSPITAL_APP_USER_SERVICE_DB_PASS}
+      POSTGRES_DB: ${USER_SERVICE_DB}
+      POSTGRES_USER: ${USER_SERVICE_DB_USER}
+      POSTGRES_PASSWORD: ${USER_SERVICE_DB_PASS}
     volumes:
       - user-service-postgres-data:/var/lib/postgresql/data
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U $${HOSPITAL_APP_USER_SERVICE_DB_USER}" ]
-      interval: 10s
+      test: ["CMD-SHELL", "pg_isready -U ${USER_SERVICE_DB_USER} -d ${USER_SERVICE_DB} -h localhost"]
+      interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 10
+      start_period: 10s
     ports:
-      - "5432"
+      - "5437:5432"
 
+  # =====================
+  # Appointment Service
+  # =====================
   appointment-service:
     build:
       context: ./
       dockerfile: appointment_service/Dockerfile
     container_name: hospital-app-appointment-service
     depends_on:
-      - appointment-service-db
-      - rabbitmq
+      appointment-service-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
     ports:
-      - "8080"
+      - "8082:8080"
       - "5006:5005"
     environment:
       ENABLE_REMOTE_DEBUG: ${ENABLE_REMOTE_DEBUG}
-      HOSPITAL_APP_APPOINTMENT_SERVICE_DB_URL: ${HOSPITAL_APP_APPOINTMENT_SERVICE_DB_URL}
-      HOSPITAL_APP_APPOINTMENT_SERVICE_DB_USER: ${HOSPITAL_APP_APPOINTMENT_SERVICE_DB_USER}
-      HOSPITAL_APP_APPOINTMENT_SERVICE_DB_PASS: ${HOSPITAL_APP_APPOINTMENT_SERVICE_DB_PASS}
-      HOSPITAL_APP_APPOINTMENT_SERVICE_DB_DRIVER: ${HOSPITAL_APP_APPOINTMENT_SERVICE_DB_DRIVER}
-      HOSPITAL_APP_APPOINTMENT_SERVICE_DB_DDL_AUTO: ${HOSPITAL_APP_APPOINTMENT_SERVICE_DB_DDL_AUTO}
-      HOSPITAL_APP_APPOINTMENT_SERVICE_DB_DIALECT: ${HOSPITAL_APP_APPOINTMENT_SERVICE_DB_DIALECT}
+      HOSPITAL_APP_APPOINTMENT_SERVICE_DB_URL: ${APPOINTMENT_SERVICE_DB_URL}
+      HOSPITAL_APP_APPOINTMENT_SERVICE_DB_USER: ${APPOINTMENT_SERVICE_DB_USER}
+      HOSPITAL_APP_APPOINTMENT_SERVICE_DB_PASS: ${APPOINTMENT_SERVICE_DB_PASS}
+      HOSPITAL_APP_APPOINTMENT_SERVICE_DB_DRIVER: ${APPOINTMENT_SERVICE_DB_DRIVER}
+      HOSPITAL_APP_APPOINTMENT_SERVICE_DB_DDL_AUTO: ${APPOINTMENT_SERVICE_DB_DDL_AUTO}
+      HOSPITAL_APP_APPOINTMENT_SERVICE_DB_DIALECT: ${APPOINTMENT_SERVICE_DB_DIALECT}
 
   appointment-service-db:
     image: postgres:15-alpine3.21
     container_name: hospital-app-appointment-service-db
     environment:
-      - POSTGRES_DB=${HOSPITAL_APP_APPOINTMENT_SERVICE_DB}
-      - POSTGRES_USER=${HOSPITAL_APP_APPOINTMENT_SERVICE_DB_USER}
-      - POSTGRES_PASSWORD=${HOSPITAL_APP_APPOINTMENT_SERVICE_DB_PASS}
+      POSTGRES_DB: ${APPOINTMENT_SERVICE_DB}
+      POSTGRES_USER: ${APPOINTMENT_SERVICE_DB_USER}
+      POSTGRES_PASSWORD: ${APPOINTMENT_SERVICE_DB_PASS}
     volumes:
       - appointment-service-postgres-data:/var/lib/postgresql/data
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U $${HOSPITAL_APP_APPOINTMENT_SERVICE_DB_USER}" ]
-      interval: 10s
+      test: ["CMD-SHELL", "pg_isready -U ${APPOINTMENT_SERVICE_DB_USER} -d ${APPOINTMENT_SERVICE_DB} -h localhost"]
+      interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 10
+      start_period: 10s
     ports:
-      - "5432"
+      - "5435:5432"
 
+  # =====================
+  # Notification Service
+  # =====================
+  notification-service:
+    build:
+      context: ./
+      dockerfile: notification_service/Dockerfile
+    container_name: hospital-app-notification-service
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "8083:8080"
+      - "5007:5005"
+
+  # =====================
+  # RabbitMQ
+  # =====================
   rabbitmq:
     image: rabbitmq:3.12-management
     container_name: hospital-app-rabbitmq
-    ports:
-      - "5672"
-      - "15672:15672"
     environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
     healthcheck:
-      test: [ "CMD", "rabbitmq-diagnostics", "ping" ]
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
       interval: 10s
       timeout: 5s
+      start_period: 10s
       retries: 5
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 
+# =====================
+# Volumes
+# =====================
 volumes:
   user-service-postgres-data:
   appointment-service-postgres-data:

@@ -13,3 +13,6 @@
 [submodule "notification_service"]
 	path = notification_service
 	url = https://github.com/gabriel-dears/notification_service.git
+[submodule "proto_repo"]
+	path = proto_repo
+	url = https://github.com/gabriel-dears/proto_repo.git

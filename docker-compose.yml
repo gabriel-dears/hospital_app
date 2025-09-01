@@ -135,11 +135,39 @@ services:
       dockerfile: appointment_history_service/Dockerfile
     container_name: hospital-app-appointment-history-service
     depends_on:
+      appointment-service-db:
+        condition: service_healthy
       rabbitmq:
         condition: service_healthy
     ports:
       - "8084:8080"
       - "5008:5005"
+    environment:
+      ENABLE_REMOTE_DEBUG: ${ENABLE_REMOTE_DEBUG}
+      HOSPITAL_APP_APPOINTMENT_HISTORY_SERVICE_DB_URL: ${APPOINTMENT_HISTORY_SERVICE_DB_URL}
+      HOSPITAL_APP_APPOINTMENT_HISTORY_SERVICE_DB_USER: ${APPOINTMENT_HISTORY_SERVICE_DB_USER}
+      HOSPITAL_APP_APPOINTMENT_HISTORY_SERVICE_DB_PASS: ${APPOINTMENT_HISTORY_SERVICE_DB_PASS}
+      HOSPITAL_APP_APPOINTMENT_HISTORY_SERVICE_DB_DRIVER: ${APPOINTMENT_HISTORY_SERVICE_DB_DRIVER}
+      HOSPITAL_APP_APPOINTMENT_HISTORY_SERVICE_DB_DDL_AUTO: ${APPOINTMENT_HISTORY_SERVICE_DB_DDL_AUTO}
+      HOSPITAL_APP_APPOINTMENT_HISTORY_SERVICE_DB_DIALECT: ${APPOINTMENT_HISTORY_SERVICE_DB_DIALECT}
+
+  appointment-history-service-db:
+    image: postgres:15-alpine3.21
+    container_name: hospital-app-appointment-history-service-db
+    environment:
+      POSTGRES_DB: ${APPOINTMENT_HISTORY_SERVICE_DB}
+      POSTGRES_USER: ${APPOINTMENT_HISTORY_SERVICE_DB_USER}
+      POSTGRES_PASSWORD: ${APPOINTMENT_HISTORY_SERVICE_DB_PASS}
+    volumes:
+      - appointment--history-service-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${APPOINTMENT_HISTORY_SERVICE_DB_USER} -d ${APPOINTMENT_HISTORY_SERVICE_DB} -h localhost" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    ports:
+      - "5436:5432"
 
   # =====================
   # RabbitMQ
@@ -166,3 +194,4 @@ services:
 volumes:
   user-service-postgres-data:
   appointment-service-postgres-data:
+  appointment--history-service-postgres-data:

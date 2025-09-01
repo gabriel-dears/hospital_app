@@ -9,9 +9,12 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
+        <module>common</module>
         <module>jwt_security_common</module>
+        <module>proto_repo</module>
         <module>user_service</module>
         <module>appointment_service</module>
-        <module>common</module>
+        <module>notification_service</module>
+        <module>appointment_history_service</module>
     </modules>
 </project>

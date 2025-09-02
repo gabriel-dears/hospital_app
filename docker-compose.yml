@@ -49,6 +49,8 @@ services:
       HOSPITAL_APP_USER_SERVICE_DB_DRIVER: ${USER_SERVICE_DB_DRIVER}
       HOSPITAL_APP_USER_SERVICE_DB_DDL_AUTO: ${USER_SERVICE_DB_DDL_AUTO}
       HOSPITAL_APP_USER_SERVICE_DB_DIALECT: ${USER_SERVICE_DB_DIALECT}
+    volumes:
+      - m2-repo:/root/.m2
 
   user-service-db:
     image: postgres:15-alpine3.21
@@ -92,6 +94,8 @@ services:
       HOSPITAL_APP_APPOINTMENT_SERVICE_DB_DRIVER: ${APPOINTMENT_SERVICE_DB_DRIVER}
       HOSPITAL_APP_APPOINTMENT_SERVICE_DB_DDL_AUTO: ${APPOINTMENT_SERVICE_DB_DDL_AUTO}
       HOSPITAL_APP_APPOINTMENT_SERVICE_DB_DIALECT: ${APPOINTMENT_SERVICE_DB_DIALECT}
+    volumes:
+      - m2-repo:/root/.m2
 
   appointment-service-db:
     image: postgres:15-alpine3.21
@@ -125,6 +129,8 @@ services:
     ports:
       - "8083:8080"
       - "5007:5005"
+    volumes:
+      - m2-repo:/root/.m2
 
   # =====================
   # Appointment History Service
@@ -150,6 +156,8 @@ services:
       HOSPITAL_APP_APPOINTMENT_HISTORY_SERVICE_DB_DRIVER: ${APPOINTMENT_HISTORY_SERVICE_DB_DRIVER}
       HOSPITAL_APP_APPOINTMENT_HISTORY_SERVICE_DB_DDL_AUTO: ${APPOINTMENT_HISTORY_SERVICE_DB_DDL_AUTO}
       HOSPITAL_APP_APPOINTMENT_HISTORY_SERVICE_DB_DIALECT: ${APPOINTMENT_HISTORY_SERVICE_DB_DIALECT}
+    volumes:
+      - m2-repo:/root/.m2
 
   appointment-history-service-db:
     image: postgres:15-alpine3.21
@@ -192,6 +200,7 @@ services:
 # Volumes
 # =====================
 volumes:
+  m2-repo:
   user-service-postgres-data:
   appointment-service-postgres-data:
   appointment--history-service-postgres-data:

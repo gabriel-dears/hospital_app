@@ -9,7 +9,7 @@ services:
     routes:
       - name: user-service-route
         paths:
-          - /user-service
+          - /users
 
   - name: appointment-service
     protocol: http
@@ -18,4 +18,13 @@ services:
     routes:
       - name: appointment-service-route
         paths:
-          - /appointment-service
+          - /appointments
+
+  - name: appointment-history-service
+    protocol: http
+    host: appointment-history-service
+    port: 8080
+    routes:
+      - name: appointment-history-service-route
+        paths:
+          - /history

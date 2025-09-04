@@ -1,0 +1,1051 @@
+type: collection.insomnia.rest/5.0
+name: Hospital App
+meta:
+  id: wrk_de3f7b80834a4e9b9f2dc271ba468719
+  created: 1756156437208
+  modified: 1756247001612
+  description: ""
+collection:
+  - name: LOGIN
+    meta:
+      id: fld_073a73e873b44b068ee58ff42134a6f7
+      created: 1756156449794
+      modified: 1757014431089
+      sortKey: -1756156449794
+      description: ""
+    children:
+      - url: localhost:8000/users/login
+        name: Login Admin
+        meta:
+          id: req_1a4bca0053114466a8a466145a39dc84
+          created: 1756156460480
+          modified: 1757012849203
+          isPrivate: false
+          description: ""
+          sortKey: -1756159124272
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"user": "admin",
+            	"password": "admin"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.4.0
+        scripts:
+          afterResponse: |-
+            try {
+
+            	// Parse the JSON response
+            	const body = JSON.parse(insomnia.response.body);
+
+            	// Check for token field
+            	if (body.jwtToken) {
+            		// Set environment variable "token"
+            		insomnia.environment.set("token", body.jwtToken);
+            		console.log("Token set:", body.jwtToken);
+            	} else {
+            		console.log("No token found in response:", body.jwtToken);
+            	}
+            } catch (err) {
+            	return;
+            }
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8000/users/login
+        name: Login Nurse
+        meta:
+          id: req_2951a07a1dee4b1fbe1a303aa8238d33
+          created: 1756217583606
+          modified: 1757012853472
+          isPrivate: false
+          description: ""
+          sortKey: -1756157316691
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"user": "{{ _.nurse_username}}",
+            	"password": "{{ _.nurse_password}}"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.4.0
+        scripts:
+          afterResponse: |-
+            try {
+
+            	// Parse the JSON response
+            	const body = JSON.parse(insomnia.response.body);
+
+            	// Check for token field
+            	if (body.jwtToken) {
+            		// Set environment variable "token"
+            		insomnia.environment.set("token", body.jwtToken);
+            		console.log("Token set:", body.jwtToken);
+            	} else {
+            		console.log("No token found in response:", body.jwtToken);
+            	}
+            } catch (err) {
+            	return;
+            }
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8000/users/login
+        name: Login Patient
+        meta:
+          id: req_b1224f94b4e84759b0e49a8db298e2b4
+          created: 1756680164255
+          modified: 1757012857187
+          isPrivate: false
+          description: ""
+          sortKey: -1756156412900.5
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"user": "patient",
+            	"password": "patientpatient"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.4.0
+        scripts:
+          afterResponse: |-
+            try {
+
+            	// Parse the JSON response
+            	const body = JSON.parse(insomnia.response.body);
+
+            	// Check for token field
+            	if (body.jwtToken) {
+            		// Set environment variable "token"
+            		insomnia.environment.set("token", body.jwtToken);
+            		console.log("Token set:", body.jwtToken);
+            	} else {
+            		console.log("No token found in response:", body.jwtToken);
+            	}
+            } catch (err) {
+            	return;
+            }
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8000/users/login
+        name: Login Patient 2
+        meta:
+          id: req_18e3a6b28a5847d180491838bb833386
+          created: 1756910119589
+          modified: 1757012861081
+          isPrivate: false
+          description: ""
+          sortKey: -1756155961005.25
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"user": "patient2",
+            	"password": "patientpatient"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.4.0
+        scripts:
+          afterResponse: |-
+            try {
+
+            	// Parse the JSON response
+            	const body = JSON.parse(insomnia.response.body);
+
+            	// Check for token field
+            	if (body.jwtToken) {
+            		// Set environment variable "token"
+            		insomnia.environment.set("token", body.jwtToken);
+            		console.log("Token set:", body.jwtToken);
+            	} else {
+            		console.log("No token found in response:", body.jwtToken);
+            	}
+            } catch (err) {
+            	return;
+            }
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: USER
+    meta:
+      id: fld_0e4fe8918fdc44b28c23bfaf12e02135
+      created: 1756156455714
+      modified: 1757014476855
+      sortKey: -1756156489107
+      description: ""
+    children:
+      - url: localhost:8000/users/user
+        name: Create nurse
+        meta:
+          id: req_21ee3ed0073d4c3c8767238f54c9f632
+          created: 1756156528419
+          modified: 1757012815327
+          isPrivate: false
+          description: ""
+          sortKey: -1756159329377
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "Nurse",
+            	"username": "nurse",
+            	"email": "nurse@gmail.com",
+            	"password": "nursenurse",
+            	"role": "NURSE"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+            id: pair_7c0f9904c933493ea83793d5d43416af
+          - name: User-Agent
+            value: insomnia/11.4.0
+            id: pair_a53ac3b1cd0343d58e7efb265df52c76
+          - id: pair_ffbd4bceeb4c4cfd93544c3f4798f43e
+            name: Authorization
+            value: Bearer {{ _.token }}
+            description: ""
+            disabled: false
+        scripts:
+          afterResponse: >
+            try {
+                // Parse response and request bodies
+                const body = JSON.parse(insomnia.response.body);
+                const requestBody = JSON.parse(insomnia.request.body);
+
+                console.log("Response body:", body);
+            		console.log("Request body:", requestBody);
+            	  console.log(insomnia.response.status)
+
+                // Only set last_created_user_password if response status is 201
+                if (insomnia.response.status === "Created") {
+            			
+            			if(requestBody && requestBody.password) {
+            				insomnia.environment.set("last_created_user_password", requestBody.password);
+                    console.log("Password saved:", requestBody.password);
+            			}
+            			if (body && body.id) {
+            				insomnia.environment.set("user_id", body.id);
+                    console.log("Nurse ID set:", body.id);
+            			} else {
+            					console.log("No nurse ID found in response.");
+            			}
+            			if (requestBody && requestBody.username) {
+                    insomnia.environment.set("nurse_username", requestBody.username);
+                    console.log("nurse username set:", requestBody.username);
+            			} else {
+            					console.log("nurse username not found in request.");
+            			}
+            			if (requestBody && requestBody.password) {
+                    insomnia.environment.set("nurse_password", requestBody.password);
+                    console.log("nurse password set:", requestBody.password);
+            			} else {
+            					console.log("nurse password not found in request.");
+            			}
+            		}
+            } catch (err) {
+                console.error("Error in response handling:", err);
+            }
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8000/users/user/{{user_id}}
+        name: Update user
+        meta:
+          id: req_c964699ac996441099c223cfdbbcbaf5
+          created: 1756159320317
+          modified: 1757012833235
+          isPrivate: false
+          description: ""
+          sortKey: -1756159329352
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "Gabriel Soares",
+            	"username": "gabriel221",
+            	"email": "gabriel221@gmail.com",
+            	"role": "PATIENT"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.4.0
+            id: pair_2e15c1425f3c4fa4a819247c5ef6270b
+          - id: pair_0397beacb23a4168be714fce6d27c0ec
+            name: Authorization
+            value: Bearer {{token}}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8000/users/user/{{user_id}}
+        name: Change user status
+        meta:
+          id: req_8b78ff41099048d8a3b9f0bace4379ab
+          created: 1756159325999
+          modified: 1757012845362
+          isPrivate: false
+          description: ""
+          sortKey: -1756159325999
+        method: PATCH
+        parameters:
+          - id: pair_3d09a42071034ce9aa575d2719c8d124
+            name: enabled
+            value: "true"
+            description: ""
+            disabled: false
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+            id: pair_fb01e39fc2e74846bc09511d8441d9a8
+          - id: pair_7f547558b132415abecdbe513cf87f87
+            name: Authorization
+            value: Bearer {{token}}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8000/users/user/{{user_id}}
+        name: Find by ID
+        meta:
+          id: req_63ce0dc61d4a4fbf90f8ff0717e5755f
+          created: 1756159327590
+          modified: 1757012829603
+          isPrivate: false
+          description: ""
+          sortKey: -1756159329364.5
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+            id: pair_41071e98f8624f5ea7accf842e38f11b
+          - id: pair_8481e9e7a25e4da0b90cfeee8d1fbbb1
+            name: Authorization
+            value: Bearer {{token}}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8000/users/user?pageNumber=0&pageSize=10
+        name: Find list
+        meta:
+          id: req_928b5a2b165a4b37b66b3bbdd9c1cb58
+          created: 1756159329177
+          modified: 1757012836155
+          isPrivate: false
+          description: ""
+          sortKey: -1756159329302
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+            id: pair_a75781920cf34727bfd8c4bf225c8356
+          - id: pair_6d0dbf387a214ce5befc2bf4455c70d2
+            name: Authorization
+            value: Bearer {{token}}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8000/users/user/{{user_id}}/change-password
+        name: Change password
+        meta:
+          id: req_c7dc968cc00c446581ba66c40b78205d
+          created: 1756159376838
+          modified: 1757012840588
+          isPrivate: false
+          description: ""
+          sortKey: -1756159329277
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"oldPassword": "{{last_created_user_password}}",
+            	"newPassword": "gabrielgabriel123123"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+            id: pair_54d22bb97d0f4c4aab203796e86285e2
+          - name: User-Agent
+            value: insomnia/11.4.0
+            id: pair_cb9b1a087b264660a5f3a63d8b6eddf3
+          - id: pair_e7128016f3944f3b9855908b7822e468
+            name: Authorization
+            value: Bearer {{token}}
+            description: ""
+            disabled: false
+        scripts:
+          afterResponse: >
+            try {
+                // Parse response and request bodies
+                const requestBody = JSON.parse(insomnia.request.body);
+
+            		console.log("Request body:", requestBody);
+            	  console.log(insomnia.response.status)
+
+                // Only set last_created_user_password if response status is 201
+                if (insomnia.response.status === "OK") {
+            			
+            			if(requestBody && requestBody.newPassword) {
+            				insomnia.environment.set("last_created_user_password", requestBody.newPassword);
+                    console.log("Password saved:", requestBody.newPassword);
+            			}
+            		}
+            } catch (err) {
+                console.error("Error in response handling:", err);
+            }
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8000/users/user
+        name: Create doctor
+        meta:
+          id: req_8fe626095539453c84e0df470fdee05d
+          created: 1756217456302
+          modified: 1757012819739
+          isPrivate: false
+          description: ""
+          sortKey: -1756159329370.75
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "Doctor",
+            	"username": "doctor",
+            	"email": "doctor@gmail.com",
+            	"password": "doctordoctor",
+            	"role": "DOCTOR"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+            id: pair_7c0f9904c933493ea83793d5d43416af
+          - name: User-Agent
+            value: insomnia/11.4.0
+            id: pair_a53ac3b1cd0343d58e7efb265df52c76
+          - id: pair_ffbd4bceeb4c4cfd93544c3f4798f43e
+            name: Authorization
+            value: Bearer {{ _.token }}
+            description: ""
+            disabled: false
+        scripts:
+          afterResponse: >
+            try {
+                // Parse response and request bodies
+                const body = JSON.parse(insomnia.response.body);
+                const requestBody = JSON.parse(insomnia.request.body);
+
+                console.log("Response body:", body);
+            		console.log("Request body:", requestBody);
+            	  console.log(insomnia.response.status)
+
+                // Only set last_created_user_password if response status is 201
+                if (insomnia.response.status === "Created") {
+            			
+            			if(requestBody && requestBody.password) {
+            				insomnia.environment.set("last_created_user_password", requestBody.password);
+                    console.log("Password saved:", requestBody.password);
+            			}
+            			
+            			if (body && body.id) {
+                    insomnia.environment.set("doctor_id", body.id);
+            				insomnia.environment.set("user_id", body.id);
+                    console.log("Doctor ID set:", body.id);
+            			} else {
+            					console.log("No doctor ID found in response.");
+            			}
+            		}
+            } catch (err) {
+                console.error("Error in response handling:", err);
+            }
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8000/users/user
+        name: Create patient
+        meta:
+          id: req_dad96b05958340d5ab6fa6263766cfd6
+          created: 1756217492550
+          modified: 1757012823773
+          isPrivate: false
+          description: ""
+          sortKey: -1756159329367.625
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "Patient",
+            	"username": "patient",
+            	"email": "patient@gmail.com",
+            	"password": "patientpatient",
+            	"role": "PATIENT"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+            id: pair_7c0f9904c933493ea83793d5d43416af
+          - name: User-Agent
+            value: insomnia/11.4.0
+            id: pair_a53ac3b1cd0343d58e7efb265df52c76
+          - id: pair_ffbd4bceeb4c4cfd93544c3f4798f43e
+            name: Authorization
+            value: Bearer {{ _.token }}
+            description: ""
+            disabled: false
+        scripts:
+          afterResponse: >
+            try {
+                // Parse response and request bodies
+                const body = JSON.parse(insomnia.response.body);
+                const requestBody = JSON.parse(insomnia.request.body);
+
+                console.log("Response body:", body);
+            		console.log("Request body:", requestBody);
+            	  console.log(insomnia.response.status)
+
+                // Only set last_created_user_password if response status is 201
+                if (insomnia.response.status === "Created") {
+            			
+            			if(requestBody && requestBody.password) {
+            				insomnia.environment.set("last_created_user_password", requestBody.password);
+                    console.log("Password saved:", requestBody.password);
+            			}
+            			
+            			if (body && body.id) {
+                    insomnia.environment.set("patient_id", body.id);
+            				insomnia.environment.set("user_id", body.id);
+                    console.log("Patient ID set:", body.id);
+            			} else {
+            					console.log("No patient ID found in response.");
+            			}
+            		}
+            } catch (err) {
+                console.error("Error in response handling:", err);
+            }
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8000/users/user
+        name: Create patient 2
+        meta:
+          id: req_5afe814d4cfd40a0bcac3b8fa3eb3f9c
+          created: 1756908952006
+          modified: 1757013513730
+          isPrivate: false
+          description: ""
+          sortKey: -1756159329366.0625
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "Patient 2",
+            	"username": "patient2",
+            	"email": "patient2@gmail.com",
+            	"password": "patientpatient",
+            	"role": "PATIENT"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+            id: pair_7c0f9904c933493ea83793d5d43416af
+          - name: User-Agent
+            value: insomnia/11.4.0
+            id: pair_a53ac3b1cd0343d58e7efb265df52c76
+          - id: pair_ffbd4bceeb4c4cfd93544c3f4798f43e
+            name: Authorization
+            value: Bearer {{ _.token }}
+            description: ""
+            disabled: false
+        scripts:
+          afterResponse: >
+            try {
+                // Parse response and request bodies
+                const body = JSON.parse(insomnia.response.body);
+                const requestBody = JSON.parse(insomnia.request.body);
+
+                console.log("Response body:", body);
+            		console.log("Request body:", requestBody);
+            	  console.log(insomnia.response.status)
+
+                // Only set last_created_user_password if response status is 201
+                if (insomnia.response.status === "Created") {
+            			
+            			if(requestBody && requestBody.password) {
+            				insomnia.environment.set("last_created_user_password", requestBody.password);
+                    console.log("Password saved:", requestBody.password);
+            			}
+            			
+            			if (body && body.id) {
+                    insomnia.environment.set("patient_id", body.id);
+            				insomnia.environment.set("user_id", body.id);
+                    console.log("Patient ID set:", body.id);
+            			} else {
+            					console.log("No patient ID found in response.");
+            			}
+            		}
+            } catch (err) {
+                console.error("Error in response handling:", err);
+            }
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: APPOINTMENT
+    meta:
+      id: fld_9a1d3d2499c14b7ba4a63ab23ee67e6a
+      created: 1756178287985
+      modified: 1757014496582
+      sortKey: -1756178287985
+      description: ""
+    children:
+      - url: localhost:8000/appointments/appointment
+        name: Create appointment
+        meta:
+          id: req_cb161046240f47d3a0a0dc9dfd3c9d7a
+          created: 1756178295841
+          modified: 1757012787955
+          isPrivate: false
+          description: ""
+          sortKey: -1756178295841
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"patientId": "{{ _.patient_id }}",
+            	"doctorId": "{{ _.doctor_id}}",
+            	"notes": "Notes...CREATED",
+            	"dateTime": "2025-10-02T11:30:00"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+            id: pair_3764101d5c8a4820b018c3ca2c1f8346
+          - name: User-Agent
+            value: insomnia/11.4.0
+            id: pair_d5716256270a4adcb09734d20199ec01
+          - id: pair_4c395e2a726d4d108313324a794347c6
+            name: Authorization
+            value: Bearer {{token}}
+            description: ""
+            disabled: false
+        scripts:
+          afterResponse: >
+            try {
+                // Parse response and request bodies
+                const body = JSON.parse(insomnia.response.body);
+                const requestBody = JSON.parse(insomnia.request.body);
+
+                console.log("Response body:", body);
+            		console.log("Request body:", requestBody);
+            	  console.log(insomnia.response.status)
+
+                // Only set last_created_user_password if response status is 201
+                if (insomnia.response.status === "Created") {
+            			
+            			if(requestBody && requestBody.password) {
+            				insomnia.environment.set("last_created_user_password", requestBody.password);
+                    console.log("Password saved:", requestBody.password);
+            			}
+            			if (body && body.id) {
+            				insomnia.environment.set("appointment_id", body.id);
+                    console.log("Appointment ID set:", body.id);
+            			} else {
+            					console.log("No appointment ID found in response.");
+            			}
+            		}
+            } catch (err) {
+                console.error("Error in response handling:", err);
+            }
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8000/appointments/appointment/{{ _.appointment_id }}
+        name: Cancel appointment
+        meta:
+          id: req_24b645f502ed4a07a9b48092bc289da6
+          created: 1756268276145
+          modified: 1757012798389
+          isPrivate: false
+          description: ""
+          sortKey: -1756168812609
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"status": "CANCELLED",
+            	"notes": "Notes...CANCELLED"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+            id: pair_3764101d5c8a4820b018c3ca2c1f8346
+          - name: User-Agent
+            value: insomnia/11.4.0
+            id: pair_d5716256270a4adcb09734d20199ec01
+          - id: pair_4c395e2a726d4d108313324a794347c6
+            name: Authorization
+            value: Bearer {{token}}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8000/appointments/appointment/{{ _.appointment_id }}
+        name: Complete appointment
+        meta:
+          id: req_88c0dfde0d9b427b83d47fa889181167
+          created: 1756995537139
+          modified: 1757012810543
+          isPrivate: false
+          description: ""
+          sortKey: -1756164070993
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"status": "COMPLETED",
+            	"notes": "Notes...COMPLETED"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+            id: pair_3764101d5c8a4820b018c3ca2c1f8346
+          - name: User-Agent
+            value: insomnia/11.4.0
+            id: pair_d5716256270a4adcb09734d20199ec01
+          - id: pair_4c395e2a726d4d108313324a794347c6
+            name: Authorization
+            value: Bearer {{token}}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8000/appointments/appointment/{{ _.appointment_id }}
+        name: No show appointment
+        meta:
+          id: req_6b777dd484404912895bef92ccce98c4
+          created: 1756995833293
+          modified: 1757012801941
+          isPrivate: false
+          description: ""
+          sortKey: -1756166441801
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"status": "NO_SHOW",
+            	"notes": "Notes...NO_SHOW"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+            id: pair_3764101d5c8a4820b018c3ca2c1f8346
+          - name: User-Agent
+            value: insomnia/11.4.0
+            id: pair_d5716256270a4adcb09734d20199ec01
+          - id: pair_4c395e2a726d4d108313324a794347c6
+            name: Authorization
+            value: Bearer {{token}}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8000/appointments/appointment/{{ _.appointment_id }}
+        name: Confirm appointment
+        meta:
+          id: req_d94fbcd94ab04d28802617ce0c260774
+          created: 1756995848748
+          modified: 1757012794683
+          isPrivate: false
+          description: ""
+          sortKey: -1756173554225
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"status": "CONFIRMED",
+            	"notes": "Notes...CONFIRMED"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+            id: pair_3764101d5c8a4820b018c3ca2c1f8346
+          - name: User-Agent
+            value: insomnia/11.4.0
+            id: pair_d5716256270a4adcb09734d20199ec01
+          - id: pair_4c395e2a726d4d108313324a794347c6
+            name: Authorization
+            value: Bearer {{token}}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: APPOINTMENT HISTORY
+    meta:
+      id: fld_d5e8b0e26e8d4da087bec09d78c5a97b
+      created: 1756749586160
+      modified: 1756749586160
+      sortKey: -1756749586160
+      description: ""
+    children:
+      - url: http://localhost:8000/history/graphql
+        name: GET HISTORY - BY APPOINTMENT ID (FUTURE, PAST, ALL)
+        meta:
+          id: req_7dde1743f76440e18e9b11e5bc28783f
+          created: 1756749590741
+          modified: 1757012876932
+          isPrivate: false
+          description: ""
+          sortKey: -1756749590741
+        method: POST
+        body:
+          mimeType: application/graphql
+          text: '{"query":"query($id: UUID!, $lastVersionOnly: Boolean, $size: Int, ,
+            $page: Int) {\n\tall: allAppointmentHistoryByAppointmentId(id: $id,
+            lastVersionOnly: $lastVersionOnly, size:  $size, page: $page)
+            {\n    pageInfo { pageNumber totalPages }\n    content { id
+            appointmentId patientId patientName doctorName dateTime status
+            version notes }\n  }\n\tfuture:
+            futureAppointmentHistoryByAppointmentId(id: $id, lastVersionOnly:
+            $lastVersionOnly, size:  $size, page: $page) {\n    pageInfo {
+            pageNumber totalPages }\n    content { id appointmentId patientId
+            patientName doctorName dateTime status version }\n  }\n\tpast:
+            pastAppointmentHistoryByAppointmentId(id: $id, lastVersionOnly:
+            $lastVersionOnly, size:  $size, page: $page) {\n    pageInfo {
+            pageNumber totalPages }\n    content { id appointmentId patientId
+            patientName doctorName dateTime status version
+            }\n  }\n}\n","variables":"{\n\t\"id\": \"{{ _.appointment_id
+            }}\",\n\t\"lastVersionOnly\": true,\n\t\"size\": 10,\n\t\"page\":
+            0\n}"}'
+        headers:
+          - name: User-Agent
+            value: insomnia/11.5.0
+            id: pair_cc414a497bcb40ff88acc687e9257b87
+          - name: Content-Type
+            value: application/json
+            id: pair_af1ad26e9f934758a01da9999dca4f69
+          - id: pair_dba8b8f9b2754c38a6cab4b76bd54816
+            name: Authorization
+            value: Bearer {{ _.token }}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8000/history/graphql
+        name: GET HISTORY (FUTURE, PAST, ALL)
+        meta:
+          id: req_d4581b857c994da4971aeb4deaf18f2f
+          created: 1756848397322
+          modified: 1757014487057
+          isPrivate: false
+          description: ""
+          sortKey: -1756463943291
+        method: POST
+        body:
+          mimeType: application/graphql
+          text: '{"query":"query ($lastVersionOnly: Boolean = true, $page: Int = 0, $size:
+            Int = 10, $patientName: String, $doctorName: String, $status:
+            String, $startDate: Date = \"2025-01-01\", $endDate: Date =
+            \"2026-01-01\", $patientEmail: String) {\n\tall:
+            allAppointmentHistories(\n    lastVersionOnly:
+            $lastVersionOnly\n    page: $page\n    size: $size\n    patientName:
+            $patientName\n    doctorName: $doctorName\n    status:
+            $status\n\t\tstartDate: $startDate\n\t\tendDate:
+            $endDate\n\t\tpatientEmail: $patientEmail\n  ) {\n    pageInfo
+            {\n      pageNumber\n      totalPages\n    }\n    content
+            {\n      id\n      appointmentId\n\t\t\tpatientId\n      patientName\n\t\t\tpatientEmail\n      doctorName\n      dateTime\n      status\n      version\n    }\n\t},\n  future:
+            futureAppointmentHistories(\n    lastVersionOnly:
+            $lastVersionOnly\n    page: $page\n    size: $size\n    patientName:
+            $patientName\n    doctorName: $doctorName\n    status:
+            $status\n\t\tstartDate: $startDate\n\t\tendDate:
+            $endDate\n\t\tpatientEmail: $patientEmail\n  ) {\n    pageInfo
+            {\n      pageNumber\n      totalPages\n    }\n    content
+            {\n      id\n      appointmentId\n\t\t\tpatientId\n      patientName\n      doctorName\n      dateTime\n      status\n      version\n    }\n\t},\n\tpast:
+            pastAppointmentHistories(\n    lastVersionOnly:
+            $lastVersionOnly\n    page: $page\n    size: $size\n    patientName:
+            $patientName\n    doctorName: $doctorName\n    status:
+            $status\n\t\tstartDate: $startDate\n\t\tendDate:
+            $endDate\n\t\tpatientEmail: $patientEmail\n  ) {\n    pageInfo
+            {\n      pageNumber\n      totalPages\n    }\n    content
+            {\n      id\n      appointmentId\n\t\t\tpatientId\n      patientName\n      doctorName\n      dateTime\n      status\n      version\n    }\n  }\n}","variables":"{\n\t\"lastVersionOnly\":
+            true,\n\t\"size\": 10,\n\t\"page\": 0,\n\t\"doctorName\":
+            \"Doc\",\n\t\"patientName\": \"Pat\",\n\t\"startDate\":
+            \"2025-10-01\",\n\t\"endDate\": \"2025-10-02\",\n\t\"patientEmail\":
+            \"patient\"\n}"}'
+        headers:
+          - name: User-Agent
+            value: insomnia/11.5.0
+            id: pair_39df6b0f356e4a1494eb4624635d397d
+          - name: Content-Type
+            value: application/json
+            id: pair_23d707eb8b9d4a99be324eb0272efd9b
+          - id: pair_da654aa45bb345da89e393736faa8b0a
+            name: Authorization
+            value: Bearer {{ _.token }}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_a0f19d2f12da1f60a1bbe900eeeaa9ce9e9993e0
+    created: 1756156437209
+    modified: 1757014496578
+environments:
+  name: Base Environment
+  meta:
+    id: env_a0f19d2f12da1f60a1bbe900eeeaa9ce9e9993e0
+    created: 1756156437209
+    modified: 1757014496581
+    isPrivate: false
+  data:
+    token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsImV4cCI6MTc1NzAxODAzMSwidXNlcl9pZCI6IjdmMWU4Nzg4LTljMDItNDY2ZC04MWFiLTk5MDY1YzU2NmE3ZiIsImlhdCI6MTc1NzAxNDQzMX0.CnQWFw8-lGJp0_8f1RBqK-6vOTcCjM2z_DGVXZHDhQbtSgr9YQjtYl65AgwC6k1bAAx5317eP0iPt_REBhFCzM3-LrzU9KUpyi_9HFRPGR-x4UBD9HWB24P86AVBAckhuXAeKo6YyGX-LU7pau7D9CKXY05Kaqx0l1ohg4R_U7p1jrxg33qzY5DsZMKn2YFKkhut1fFV7ymg0Dt3KcCB4KJcxaSLYt62ICP7IgRlYFUFPqFwBIOgCJT7GgixgfdXxfVJocv5QLhHZm3J489Q9jMYXTvp4k2mCcCsMQeNOXg0bOksnDOiGr1Yk7TxVy6HQVWtc3vpc6cwPTwCIzNTKg
+    user_id: 4a66e957-3b8d-4f3a-a3db-f52c4093c4b9
+    last_created_user_password: patientpatient
+    nurse_username: nurse
+    nurse_password: nursenurse
+    doctor_id: d3e890a0-9a1e-496b-a8d4-a88a778897cd
+    patient_id: 4a66e957-3b8d-4f3a-a3db-f52c4093c4b9
+    appointment_id: 72e167ff-20f5-43e7-98b6-99d202e785a9

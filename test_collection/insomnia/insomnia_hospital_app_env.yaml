@@ -1,0 +1,23 @@
+type: environment.insomnia.rest/5.0
+name: Hospital App - Env
+meta:
+  id: wrk_0f7f81eaaa104790a3a9384ccf441a8f
+  created: 1756156362933
+  modified: 1756156362933
+  description: ""
+environments:
+  name: Base Environment
+  meta:
+    id: env_3a4fe9e7bcbdb021fb5c969008acf340e191f40a
+    created: 1756156362934
+    modified: 1757014496582
+    isPrivate: false
+  data:
+    token: ""
+    user_id: ""
+    last_created_user_password: ""
+    doctor_id: ""
+    patient_id: ""
+    nurse_username: ""
+    nurse_password: ""
+    appointment_id: ""

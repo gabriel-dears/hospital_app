@@ -128,9 +128,35 @@ services:
         condition: service_healthy
     ports:
       - "8083:8080"
-      - "5007:5005"
+      - "5009:5005"
+    environment:
+      ENABLE_REMOTE_DEBUG: ${ENABLE_REMOTE_DEBUG}
+      HOSPITAL_APP_NOTIFICATION_SERVICE_DB_URL: ${NOTIFICATION_SERVICE_DB_URL}
+      HOSPITAL_APP_NOTIFICATION_SERVICE_DB_USER: ${NOTIFICATION_SERVICE_DB_USER}
+      HOSPITAL_APP_NOTIFICATION_SERVICE_DB_PASS: ${NOTIFICATION_SERVICE_DB_PASS}
+      HOSPITAL_APP_NOTIFICATION_SERVICE_DB_DRIVER: ${NOTIFICATION_SERVICE_DB_DRIVER}
+      HOSPITAL_APP_NOTIFICATION_SERVICE_DB_DDL_AUTO: ${NOTIFICATION_SERVICE_DB_DDL_AUTO}
+      HOSPITAL_APP_NOTIFICATION_SERVICE_DB_DIALECT: ${NOTIFICATION_SERVICE_DB_DIALECT}
     volumes:
       - m2-repo:/root/.m2
+
+  notification-service-db:
+    image: postgres:15-alpine3.21
+    container_name: hospital-app-notification-service-db
+    environment:
+      POSTGRES_DB: ${NOTIFICATION_SERVICE_DB}
+      POSTGRES_USER: ${NOTIFICATION_SERVICE_DB_USER}
+      POSTGRES_PASSWORD: ${NOTIFICATION_SERVICE_DB_PASS}
+    volumes:
+      - notification-service-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${NOTIFICATION_SERVICE_DB_USER} -d ${NOTIFICATION_SERVICE_DB} -h localhost" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    ports:
+      - "5438:5432"
 
   # =====================
   # Appointment History Service
@@ -204,3 +230,4 @@ volumes:
   user-service-postgres-data:
   appointment-service-postgres-data:
   appointment--history-service-postgres-data:
+  notification-service-postgres-data:

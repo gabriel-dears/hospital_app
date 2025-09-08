@@ -10,7 +10,7 @@ collection:
     meta:
       id: fld_073a73e873b44b068ee58ff42134a6f7
       created: 1756156449794
-      modified: 1757014431089
+      modified: 1757337793289
       sortKey: -1756156449794
       description: ""
     children:
@@ -210,7 +210,7 @@ collection:
     meta:
       id: fld_0e4fe8918fdc44b28c23bfaf12e02135
       created: 1756156455714
-      modified: 1757014476855
+      modified: 1757337807422
       sortKey: -1756156489107
       description: ""
     children:
@@ -219,7 +219,7 @@ collection:
         meta:
           id: req_21ee3ed0073d4c3c8767238f54c9f632
           created: 1756156528419
-          modified: 1757012815327
+          modified: 1757110936107
           isPrivate: false
           description: ""
           sortKey: -1756159329377
@@ -230,6 +230,7 @@ collection:
             {
             	"name": "Nurse",
             	"username": "nurse",
+            	"cpf": "369.605.430-53",
             	"email": "nurse@gmail.com",
             	"password": "nursenurse",
             	"role": "NURSE"
@@ -259,7 +260,7 @@ collection:
 
                 // Only set last_created_user_password if response status is 201
                 if (insomnia.response.status === "Created") {
-            			
+            
             			if(requestBody && requestBody.password) {
             				insomnia.environment.set("last_created_user_password", requestBody.password);
                     console.log("Password saved:", requestBody.password);
@@ -299,7 +300,7 @@ collection:
         meta:
           id: req_c964699ac996441099c223cfdbbcbaf5
           created: 1756159320317
-          modified: 1757012833235
+          modified: 1757113305915
           isPrivate: false
           description: ""
           sortKey: -1756159329352
@@ -310,6 +311,7 @@ collection:
             {
             	"name": "Gabriel Soares",
             	"username": "gabriel221",
+            	"cpf": "759.780.800-38",
             	"email": "gabriel221@gmail.com",
             	"role": "PATIENT"
             }
@@ -459,7 +461,7 @@ collection:
 
                 // Only set last_created_user_password if response status is 201
                 if (insomnia.response.status === "OK") {
-            			
+            
             			if(requestBody && requestBody.newPassword) {
             				insomnia.environment.set("last_created_user_password", requestBody.newPassword);
                     console.log("Password saved:", requestBody.newPassword);
@@ -481,7 +483,7 @@ collection:
         meta:
           id: req_8fe626095539453c84e0df470fdee05d
           created: 1756217456302
-          modified: 1757012819739
+          modified: 1757110885235
           isPrivate: false
           description: ""
           sortKey: -1756159329370.75
@@ -492,6 +494,7 @@ collection:
             {
             	"name": "Doctor",
             	"username": "doctor",
+            	"cpf": "912.580.440-56",
             	"email": "doctor@gmail.com",
             	"password": "doctordoctor",
             	"role": "DOCTOR"
@@ -521,12 +524,12 @@ collection:
 
                 // Only set last_created_user_password if response status is 201
                 if (insomnia.response.status === "Created") {
-            			
+            
             			if(requestBody && requestBody.password) {
             				insomnia.environment.set("last_created_user_password", requestBody.password);
                     console.log("Password saved:", requestBody.password);
             			}
-            			
+            
             			if (body && body.id) {
                     insomnia.environment.set("doctor_id", body.id);
             				insomnia.environment.set("user_id", body.id);
@@ -551,7 +554,7 @@ collection:
         meta:
           id: req_dad96b05958340d5ab6fa6263766cfd6
           created: 1756217492550
-          modified: 1757012823773
+          modified: 1757112860779
           isPrivate: false
           description: ""
           sortKey: -1756159329367.625
@@ -562,7 +565,8 @@ collection:
             {
             	"name": "Patient",
             	"username": "patient",
-            	"email": "patient@gmail.com",
+            	"cpf": "109.438.470-44",
+            	"email": "patient1@gmail.com",
             	"password": "patientpatient",
             	"role": "PATIENT"
             }
@@ -591,12 +595,12 @@ collection:
 
                 // Only set last_created_user_password if response status is 201
                 if (insomnia.response.status === "Created") {
-            			
+            
             			if(requestBody && requestBody.password) {
             				insomnia.environment.set("last_created_user_password", requestBody.password);
                     console.log("Password saved:", requestBody.password);
             			}
-            			
+            
             			if (body && body.id) {
                     insomnia.environment.set("patient_id", body.id);
             				insomnia.environment.set("user_id", body.id);
@@ -621,7 +625,7 @@ collection:
         meta:
           id: req_5afe814d4cfd40a0bcac3b8fa3eb3f9c
           created: 1756908952006
-          modified: 1757013513730
+          modified: 1757337730573
           isPrivate: false
           description: ""
           sortKey: -1756159329366.0625
@@ -632,7 +636,8 @@ collection:
             {
             	"name": "Patient 2",
             	"username": "patient2",
-            	"email": "patient2@gmail.com",
+            	"cpf": "759.780.800-38",
+            	"email": "gabrielsoares@gmail.com",
             	"password": "patientpatient",
             	"role": "PATIENT"
             }
@@ -661,12 +666,12 @@ collection:
 
                 // Only set last_created_user_password if response status is 201
                 if (insomnia.response.status === "Created") {
-            			
+            
             			if(requestBody && requestBody.password) {
             				insomnia.environment.set("last_created_user_password", requestBody.password);
                     console.log("Password saved:", requestBody.password);
             			}
-            			
+            
             			if (body && body.id) {
                     insomnia.environment.set("patient_id", body.id);
             				insomnia.environment.set("user_id", body.id);
@@ -690,7 +695,7 @@ collection:
     meta:
       id: fld_9a1d3d2499c14b7ba4a63ab23ee67e6a
       created: 1756178287985
-      modified: 1757014496582
+      modified: 1757337818674
       sortKey: -1756178287985
       description: ""
     children:
@@ -699,7 +704,7 @@ collection:
         meta:
           id: req_cb161046240f47d3a0a0dc9dfd3c9d7a
           created: 1756178295841
-          modified: 1757012787955
+          modified: 1757113405013
           isPrivate: false
           description: ""
           sortKey: -1756178295841
@@ -711,7 +716,7 @@ collection:
             	"patientId": "{{ _.patient_id }}",
             	"doctorId": "{{ _.doctor_id}}",
             	"notes": "Notes...CREATED",
-            	"dateTime": "2025-10-02T11:30:00"
+            	"dateTime": "2025-10-05T13:14:00"
             }
         headers:
           - name: Content-Type
@@ -738,7 +743,7 @@ collection:
 
                 // Only set last_created_user_password if response status is 201
                 if (insomnia.response.status === "Created") {
-            			
+            
             			if(requestBody && requestBody.password) {
             				insomnia.environment.set("last_created_user_password", requestBody.password);
                     console.log("Password saved:", requestBody.password);
@@ -1032,20 +1037,20 @@ cookieJar:
   meta:
     id: jar_a0f19d2f12da1f60a1bbe900eeeaa9ce9e9993e0
     created: 1756156437209
-    modified: 1757014496578
+    modified: 1757337818666
 environments:
   name: Base Environment
   meta:
     id: env_a0f19d2f12da1f60a1bbe900eeeaa9ce9e9993e0
     created: 1756156437209
-    modified: 1757014496581
+    modified: 1757337818672
     isPrivate: false
   data:
-    token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsImV4cCI6MTc1NzAxODAzMSwidXNlcl9pZCI6IjdmMWU4Nzg4LTljMDItNDY2ZC04MWFiLTk5MDY1YzU2NmE3ZiIsImlhdCI6MTc1NzAxNDQzMX0.CnQWFw8-lGJp0_8f1RBqK-6vOTcCjM2z_DGVXZHDhQbtSgr9YQjtYl65AgwC6k1bAAx5317eP0iPt_REBhFCzM3-LrzU9KUpyi_9HFRPGR-x4UBD9HWB24P86AVBAckhuXAeKo6YyGX-LU7pau7D9CKXY05Kaqx0l1ohg4R_U7p1jrxg33qzY5DsZMKn2YFKkhut1fFV7ymg0Dt3KcCB4KJcxaSLYt62ICP7IgRlYFUFPqFwBIOgCJT7GgixgfdXxfVJocv5QLhHZm3J489Q9jMYXTvp4k2mCcCsMQeNOXg0bOksnDOiGr1Yk7TxVy6HQVWtc3vpc6cwPTwCIzNTKg
-    user_id: 4a66e957-3b8d-4f3a-a3db-f52c4093c4b9
+    token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsImV4cCI6MTc1NzM0MTM5MywidXNlcl9pZCI6ImVjMWU2YzQ0LTgwY2UtNGU3MS1iYzIzLTg2YzYyMTU1MmM5ZSIsImlhdCI6MTc1NzMzNzc5M30.BMcM0MewD82hZ-BBLn_lDGG_m9yDohfWGbdqjaBsNDtEEMj80AHFPfrCG1vTqfqsUycmiAN7UhcXq4Kh0yJbrfsKer6tq2Hkw4uPdiKYRzMimqZvsZCeW3G64ktgJEjrwCc_dD94XJf3_Ta4wM220eHLQ22c8Gx8F1X7SwvjWqfKriMrD114Tgwlqp_o8FSdomFAVLwYdRsrwkHU_aKG9MshprjGKeFYQhlw8tKFOfiOGwmcq2OGP6RIw-ugFUkXCg3WK8g_k9xN0din0SToeUSit5m6OVOTUN9iGvZx7FS-CFfEGJugwl95qtbWMrJkvWDmHYP_dYhTeaOJlEzldg
+    user_id: 3111e730-577e-4c18-b755-e1be2899d60e
     last_created_user_password: patientpatient
     nurse_username: nurse
     nurse_password: nursenurse
-    doctor_id: d3e890a0-9a1e-496b-a8d4-a88a778897cd
-    patient_id: 4a66e957-3b8d-4f3a-a3db-f52c4093c4b9
-    appointment_id: 72e167ff-20f5-43e7-98b6-99d202e785a9
+    doctor_id: 6b72550f-2b00-4f94-88b8-6475376f4f22
+    patient_id: 3111e730-577e-4c18-b755-e1be2899d60e
+    appointment_id: f1c31bdb-508f-4304-8951-e706c7fbc91b

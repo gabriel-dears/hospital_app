@@ -11,6 +11,18 @@ Monorepo for a microservices-based hospital application. It includes:
 - kong: declarative config for Kong API Gateway (optional for local usage).
 - rabbitmq: RabbitMQ configuration and TLS materials.
 
+## Repository and cloning
+- Upstream repository: https://github.com/gabriel-dears/hospital_app
+- Author: Gabriel de Alcantara Rodrigues Soares (GitHub: gabriel-dears)
+
+Clone (with submodules, if any are configured):
+- Recommended (single step):
+  git clone --recurse-submodules https://github.com/gabriel-dears/hospital_app.git
+- If you already cloned without submodules:
+  cd hospital_app
+  git submodule update --init --recursive
+
+Note: If this repository doesn’t define any submodules, the above submodule commands are harmless and will do nothing.
 
 ## Prerequisites
 - Docker and Docker Compose

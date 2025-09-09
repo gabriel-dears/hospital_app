@@ -43,3 +43,5 @@ Desktop.ini
 # Security
 
 .env
+
+./scripts/tls

@@ -45,3 +45,4 @@ Desktop.ini
 .env
 
 scripts/tls
+rabbitmq/certs

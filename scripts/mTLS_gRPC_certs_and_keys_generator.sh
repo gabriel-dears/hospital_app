@@ -6,8 +6,8 @@ set -euo pipefail
 # -----------------------------
 BASE_DIR="$(pwd)"
 TLS_TMP="$BASE_DIR/tls"
-USER_TLS="$BASE_DIR/user_service/src/main/resources/tls"
-APPT_TLS="$BASE_DIR/appointment_service/src/main/resources/tls"
+USER_TLS="../user_service/src/main/resources/tls"
+APPT_TLS="../appointment_service/src/main/resources/tls"
 
 mkdir -p "$TLS_TMP" "$USER_TLS" "$APPT_TLS"
 

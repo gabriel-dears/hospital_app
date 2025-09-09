@@ -1,73 +1,120 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
+set -euo pipefail
 
-TLS_DIR="./tls"
-mkdir -p $TLS_DIR
+# -----------------------------
+# Directories
+# -----------------------------
+BASE_DIR="$(pwd)"
+TLS_TMP="$BASE_DIR/tls"
+USER_TLS="$BASE_DIR/user_service/src/main/resources/tls"
+APPT_TLS="$BASE_DIR/appointment_service/src/main/resources/tls"
+
+mkdir -p "$TLS_TMP" "$USER_TLS" "$APPT_TLS"
+
+# -----------------------------
+# 0. Cleanup
+# -----------------------------
+rm -f "$TLS_TMP"/ca.srl
 
 # -----------------------------
 # 1. Root CA
 # -----------------------------
 echo "Generating Root CA..."
-openssl genrsa -out $TLS_DIR/ca.key 4096
-openssl req -x509 -new -nodes -key $TLS_DIR/ca.key -sha256 -days 365 \
-    -out $TLS_DIR/ca.crt -subj "/CN=MyRootCA"
+openssl genrsa -out "$TLS_TMP/ca.key" 4096
+openssl req -x509 -new -nodes -key "$TLS_TMP/ca.key" -sha256 -days 3650 \
+  -out "$TLS_TMP/ca.crt" -subj "/CN=MyRootCA"
 
 # -----------------------------
-# 2. user_service cert
+# Helper to create extfile
+# -----------------------------
+write_extfile() {
+  local file="$1"
+  local cn="$2"
+  local usage="$3"
+
+  cat > "$file" <<EOF
+[ req ]
+default_bits       = 2048
+distinguished_name = dn
+req_extensions     = req_ext
+prompt             = no
+
+[ dn ]
+CN = $cn
+
+[ req_ext ]
+subjectAltName = @alt_names
+extendedKeyUsage = $usage
+
+[ alt_names ]
+DNS.1 = $cn
+DNS.2 = localhost
+EOF
+}
+
+
+# -----------------------------
+# 2. user_service cert (serverAuth)
 # -----------------------------
 echo "Generating user_service certificate..."
-cat > $TLS_DIR/user_service.cnf <<EOL
-[ req ]
-default_bits       = 2048
-distinguished_name = dn
-req_extensions     = req_ext
-prompt             = no
+write_extfile "$TLS_TMP/user_service.cnf" "user-service" "serverAuth, clientAuth"
 
-[ dn ]
-CN = user-service
+openssl genrsa -out "$TLS_TMP/user_service.key" 2048
+openssl req -new -key "$TLS_TMP/user_service.key" \
+  -out "$TLS_TMP/user_service.csr" -config "$TLS_TMP/user_service.cnf"
 
-[ req_ext ]
-subjectAltName = @alt_names
-extendedKeyUsage = serverAuth
-
-[ alt_names ]
-DNS.1 = user-service
-DNS.2 = localhost
-EOL
-
-openssl genrsa -out $TLS_DIR/user_service.key 2048
-openssl req -new -key $TLS_DIR/user_service.key -out $TLS_DIR/user_service.csr -config $TLS_DIR/user_service.cnf
-openssl x509 -req -in $TLS_DIR/user_service.csr -CA $TLS_DIR/ca.crt -CAkey $TLS_DIR/ca.key \
-    -CAcreateserial -out $TLS_DIR/user_service.crt -days 365 -sha256 \
-    -extfile $TLS_DIR/user_service.cnf -extensions req_ext
+openssl x509 -req -in "$TLS_TMP/user_service.csr" \
+  -CA "$TLS_TMP/ca.crt" -CAkey "$TLS_TMP/ca.key" -CAcreateserial \
+  -out "$TLS_TMP/user_service.crt" -days 365 -sha256 \
+  -extfile "$TLS_TMP/user_service.cnf" -extensions req_ext
 
 # -----------------------------
-# 3. appointment_service cert
+# 3. appointment_service cert (clientAuth)
 # -----------------------------
 echo "Generating appointment_service certificate..."
-cat > $TLS_DIR/appointment_service.cnf <<EOL
-[ req ]
-default_bits       = 2048
-distinguished_name = dn
-req_extensions     = req_ext
-prompt             = no
+write_extfile "$TLS_TMP/appointment_service.cnf" "appointment-service" "clientAuth"
 
-[ dn ]
-CN = appointment-service
+openssl genrsa -out "$TLS_TMP/appointment_service.key" 2048
+openssl req -new -key "$TLS_TMP/appointment_service.key" \
+  -out "$TLS_TMP/appointment_service.csr" -config "$TLS_TMP/appointment_service.cnf"
 
-[ req_ext ]
-subjectAltName = @alt_names
-extendedKeyUsage = clientAuth
+openssl x509 -req -in "$TLS_TMP/appointment_service.csr" \
+  -CA "$TLS_TMP/ca.crt" -CAkey "$TLS_TMP/ca.key" -CAcreateserial \
+  -out "$TLS_TMP/appointment_service.crt" -days 365 -sha256 \
+  -extfile "$TLS_TMP/appointment_service.cnf" -extensions req_ext
 
-[ alt_names ]
-DNS.1 = appointment-service
-DNS.2 = localhost
-EOL
+openssl pkcs8 -topk8 -nocrypt -in "$TLS_TMP/appointment_service.key" -out "$TLS_TMP/appointment_service_pkcs8.key"
+openssl pkcs8 -topk8 -nocrypt -in "$TLS_TMP/user_service.key" -out "$TLS_TMP/user_service_pkcs8.key"
 
-openssl genrsa -out $TLS_DIR/appointment_service.key 2048
-openssl req -new -key $TLS_DIR/appointment_service.key -out $TLS_DIR/appointment_service.csr -config $TLS_DIR/appointment_service.cnf
-openssl x509 -req -in $TLS_DIR/appointment_service.csr -CA $TLS_DIR/ca.crt -CAkey $TLS_DIR/ca.key \
-    -CAcreateserial -out $TLS_DIR/appointment_service.crt -days 365 -sha256 \
-    -extfile $TLS_DIR/appointment_service.cnf -extensions req_ext
+# -----------------------------
+# 4. Copy certs to services
+# -----------------------------
+echo "Copying certs into services..."
+cp "$TLS_TMP"/ca.crt "$TLS_TMP"/user_service*.* "$USER_TLS/"
+cp "$TLS_TMP"/ca.crt "$TLS_TMP"/appointment_service*.* "$APPT_TLS/"
 
-echo "All certificates generated in $TLS_DIR"
+# -----------------------------
+# 5. Permissions
+# -----------------------------
+chmod 600 "$USER_TLS"/*.key "$APPT_TLS"/*.key
+
+# -----------------------------
+# 6. Verification
+# -----------------------------
+echo
+echo "=== Verify certs ==="
+openssl verify -CAfile "$TLS_TMP/ca.crt" "$TLS_TMP/user_service.crt"
+openssl verify -CAfile "$TLS_TMP/ca.crt" "$TLS_TMP/appointment_service.crt"
+
+echo
+echo "=== user_service cert details ==="
+openssl x509 -in "$TLS_TMP/user_service.crt" -noout -text | grep -A2 "Subject:"
+
+echo
+echo "=== appointment_service cert details ==="
+openssl x509 -in "$TLS_TMP/appointment_service.crt" -noout -text | grep -A2 "Subject:"
+
+echo
+echo "All certificates generated and installed into:"
+echo "  - $USER_TLS"
+echo "  - $APPT_TLS"

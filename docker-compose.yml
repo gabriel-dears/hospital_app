@@ -231,3 +231,10 @@ volumes:
   appointment-service-postgres-data:
   appointment--history-service-postgres-data:
   notification-service-postgres-data:
+
+# =====================
+# Networks
+# =====================
+networks:
+  hospital-net:
+    driver: bridge

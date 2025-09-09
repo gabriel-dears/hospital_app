@@ -1,3 +1,9 @@
+---
+title: "ADJT - BB - Tech Challenge - Fase 3"
+author: "Gabriel de Alcantara Rodrigues Soares - RM363700"
+date: "September 9th, 2025"
+---
+
 # 3. Project Documentation
 
 This document provides a clear overview of the **Hospital App** microservices system. It walks through the architecture, APIs, operational aspects, and step-by-step setup instructions. The goal is to give anyone a **straightforward understanding** of the system and a **quick starting point** for exploring and testing its features using the base admin user.
@@ -188,5 +194,6 @@ There is a clear separation of:
 
 - Module READMEs: user_service, appointment_service, appointment_history_service, notification_service, common, jwt_security_common, proto_repo
 
-Repository: https://github.com/gabriel-dears/hospital_app
-Linkedin: https://www.linkedin.com/in/gabriel-soares-665a18221/
+- Repository: https://github.com/gabriel-dears/hospital_app
+
+- Linkedin: https://www.linkedin.com/in/gabriel-soares-665a18221/

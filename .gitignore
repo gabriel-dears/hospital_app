@@ -44,4 +44,4 @@ Desktop.ini
 
 .env
 
-./scripts/tls
+scripts/tls

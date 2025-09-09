@@ -129,12 +129,11 @@ There is a clear separation of:
 
 **Base paths and endpoints**
 
-- **user_service (REST)**: `/login`, `/user`, `/doctor`, `/patient`
-- **appointment_service (REST)**: `/appointment` (create/update)
-- **appointment_history_service (GraphQL)**: `/graphql`, `/graphiql`, `/voyager`
-- **notification_service**: Message-driven, no public API
+- **user_service (REST)**: localhost:8000/users -> `/login`, `/user`, `/doctor`, `/patient`
+- **appointment_service (REST)**: localhost:8000/appointments -> `/appointment` (create/update)
+- **appointment_history_service (GraphQL)**: localhost:8000/history -> `/graphql`
 
-> See `GRAPHQL_README.md` for schema and queries. Swagger UIs are available via local proxy or direct service ports.
+> See `GRAPHQL_README.md` for schema and queries. Swagger UIs are available via local proxy.
 
 ## 3.5 Setup and Execution
 

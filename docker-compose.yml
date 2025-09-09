@@ -209,18 +209,21 @@ services:
   rabbitmq:
     image: rabbitmq:3.12-management
     container_name: hospital-app-rabbitmq
+    ports:
+      - "5671:5671" # SSL
+      - "15671:15671" # Management over HTTPS
+    volumes:
+      - ./rabbitmq/certs:/etc/rabbitmq/certs:ro
+      - ./rabbitmq/conf/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
     environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
     healthcheck:
-      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      test: [ "CMD", "rabbitmq-diagnostics", "ping" ]
       interval: 10s
       timeout: 5s
       start_period: 10s
       retries: 5
-    ports:
-      - "5672:5672"
-      - "15672:15672"
 
 # =====================
 # Volumes

@@ -1,6 +1,6 @@
 # 3. Project Documentation
 
-This document presents a comprehensive overview of the **Hospital App** microservices system from a **student/postgraduate perspective**. It consolidates the system architecture, interfaces, operational concerns, and detailed instructions for setup and execution. The aim is to provide the teacher with a **clear, structured understanding** of the system, including the **starting point for operations using the base admin user**.
+This document provides a clear overview of the **Hospital App** microservices system. It walks through the architecture, APIs, operational aspects, and step-by-step setup instructions. The goal is to give anyone a **straightforward understanding** of the system and a **quick starting point** for exploring and testing its features using the base admin user.
 
 References to supplementary material within this repository are provided throughout, including:
 

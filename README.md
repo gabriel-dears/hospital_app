@@ -35,6 +35,18 @@ Note: If this repository doesn’t define any submodules, the above submodule co
   - NOTIFICATION_SERVICE_MAIL_USER and NOTIFICATION_SERVICE_MAIL_PASS (SMTP credentials)
   - Leave the default internal hostnames (e.g., user-service-db, appointment-service-db) when running via Docker Compose
 
+### Base Admin User
+
+For the **User Service**, a base admin user is automatically created on startup using the environment variables (the first login will be executed with below credentials):
+
+```env
+INITIAL_ADMIN_NAME=Admin
+INITIAL_ADMIN_USERNAME=admin
+INITIAL_ADMIN_EMAIL=admin@email.com
+INITIAL_ADMIN_CPF=063.086.090-48
+INITIAL_ADMIN_PASSWORD=admin
+```
+
 Example:
   cp .env.example .env
   # then edit .env
